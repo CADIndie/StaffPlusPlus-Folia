@@ -89,7 +89,7 @@ public class StaffLocationService {
         Location location = staffLocation.getLocation();
 
         if (staffLocation.getServerName().equalsIgnoreCase(options.serverName)) {
-            player.teleport(location);
+            player.teleportAsync(location);
         } else {
             teleportToOtherServer(player, locationId, staffLocation);
         }

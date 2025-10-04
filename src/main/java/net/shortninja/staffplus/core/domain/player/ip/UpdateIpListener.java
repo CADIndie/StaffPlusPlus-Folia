@@ -7,8 +7,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import static org.bukkit.Bukkit.getScheduler;
-
 @IocBukkitListener
 public class UpdateIpListener implements Listener {
 
@@ -20,6 +18,6 @@ public class UpdateIpListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void updateIp(PlayerJoinEvent playerJoinEvent) {
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> playerIpService.savePlayerIp(playerJoinEvent.getPlayer()));
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> playerIpService.savePlayerIp(playerJoinEvent.getPlayer()));
     }
 }

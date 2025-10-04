@@ -9,7 +9,6 @@ import net.shortninja.staffplus.core.application.session.OnlinePlayerSession;
 import net.shortninja.staffplus.core.application.session.OnlineSessionsManager;
 import net.shortninja.staffplus.core.domain.player.PlayerManager;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 
 import java.util.stream.Stream;
 
@@ -18,7 +17,7 @@ public class InvestigationActionBarService {
 
     public InvestigationActionBarService(OnlineSessionsManager sessionManager, Messages messages, PlayerManager playerManager) {
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(() -> {
             sessionManager.getAll().stream()
                 .filter(OnlinePlayerSession::isUnderInvestigation)
                 .map(s -> playerManager.getOnlinePlayer(s.getUuid()))

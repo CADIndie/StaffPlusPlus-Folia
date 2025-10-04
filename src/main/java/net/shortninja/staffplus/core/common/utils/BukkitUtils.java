@@ -22,7 +22,7 @@ public class BukkitUtils {
 
     public static void sendEvent(Event event) {
         if (StaffPlusPlus.get().isEnabled()) {
-            getScheduler().runTask(StaffPlusPlus.get(), () -> Bukkit.getPluginManager().callEvent(event));
+            StaffPlusPlus.getScheduler().runTask(() -> Bukkit.getPluginManager().callEvent(event));
         }
     }
 
@@ -33,11 +33,11 @@ public class BukkitUtils {
     }
 
     public static void sendEventAsync(Event event) {
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> Bukkit.getPluginManager().callEvent(event));
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> Bukkit.getPluginManager().callEvent(event));
     }
 
     public void runTaskAsync(CommandSender sender, Runnable runnable) {
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             try {
                 runnable.run();
             } catch (BusinessException e) {
@@ -47,7 +47,7 @@ public class BukkitUtils {
     }
 
     public void runTaskLater(CommandSender sender, Runnable runnable) {
-        getScheduler().runTaskLater(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskLater(() -> {
             try {
                 runnable.run();
             } catch (BusinessException e) {

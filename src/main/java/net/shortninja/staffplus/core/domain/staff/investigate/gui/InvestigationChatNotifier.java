@@ -18,7 +18,6 @@ import net.shortninja.staffplusplus.investigate.InvestigationStartedEvent;
 import net.shortninja.staffplusplus.investigate.InvestigationStatus;
 import net.shortninja.staffplusplus.session.SppPlayer;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -97,7 +96,7 @@ public class InvestigationChatNotifier implements Listener {
     @EventHandler
     public void notifyUnderInvestigationOnJoin(StaffPlusPlusJoinedEvent event) {
         Player player = event.getPlayer();
-        Bukkit.getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             List<Investigation> investigation = investigationsRepository.findAllInvestigationForInvestigated(player.getUniqueId(), Collections.singletonList(InvestigationStatus.OPEN));
             if (!investigation.isEmpty() && StringUtils.isNotEmpty(messages.underInvestigationJoin)) {
                 messages.send(player, messages.underInvestigationJoin, messages.prefixInvestigations);

@@ -43,13 +43,13 @@ public class TeleportService {
 
         Location location = teleportConfiguration.locations.get(locationId);
         addPreviousLocation(targetPlayer);
-        targetPlayer.teleport(location);
+        targetPlayer.teleportAsync(location);
         messages.send(commandSender, "&6" + targetPlayer.getName() + " teleported to " + locationId, messages.prefixGeneral);
     }
 
     public void teleportSelf(Player targetPlayer, Location location) {
         addPreviousLocation(targetPlayer);
-        targetPlayer.teleport(location);
+        targetPlayer.teleportAsync(location);
         messages.send(targetPlayer, "&6You have been teleported", messages.prefixGeneral);
     }
 
@@ -57,13 +57,13 @@ public class TeleportService {
         Location location = targetPlayer.getLocation();
         location.setWorld(targetPlayer.getWorld());
         addPreviousLocation(sourcePlayer);
-        sourcePlayer.teleport(location);
+        sourcePlayer.teleportAsync(location);
     }
 
     public void teleportToPlayer(Player sourcePlayer, SppPlayer targetPlayer) {
         Location location = targetPlayer.isOnline() ? targetPlayer.getPlayer().getLocation() : getLocationOfflinePlayer(targetPlayer);
         addPreviousLocation(sourcePlayer);
-        sourcePlayer.teleport(location);
+        sourcePlayer.teleportAsync(location);
     }
 
     public void teleportPlayerBack(Player player) {
@@ -71,7 +71,7 @@ public class TeleportService {
             throw new BusinessException("&CUnable to teleport player back, no previous locations found");
         }
         Location previousLocation = previousLocations.get(player).pop();
-        player.teleport(previousLocation);
+        player.teleportAsync(previousLocation);
     }
 
     private void addPreviousLocation(Player player) {

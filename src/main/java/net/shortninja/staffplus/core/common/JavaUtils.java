@@ -3,6 +3,7 @@ package net.shortninja.staffplus.core.common;
 import be.garagepoort.staffplusplus.craftbukkit.common.json.rayzr.JSONMessage;
 import inet.ipaddr.IPAddress;
 import inet.ipaddr.IPAddressString;
+import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplusplus.ILocation;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.net.util.SubnetUtils;
@@ -175,11 +176,13 @@ public class JavaUtils {
      * @param player Player with the inventory to be cleared.
      */
     public static void clearInventory(Player player) {
-        player.getInventory().clear();
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
+        StaffPlusPlus.getScheduler().runTaskAtEntity(player, () -> {
+            player.getInventory().clear();
+            player.getInventory().setHelmet(null);
+            player.getInventory().setChestplate(null);
+            player.getInventory().setLeggings(null);
+            player.getInventory().setBoots(null);
+        });
     }
 
     /**

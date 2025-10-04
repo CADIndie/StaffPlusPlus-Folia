@@ -1,6 +1,7 @@
 package net.shortninja.staffplus.core.domain.staff.mode.handler;
 
 import be.garagepoort.mcioc.IocBean;
+import me.nahu.scheduler.wrapper.runnable.WrappedRunnable;
 import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplus.core.application.config.Options;
 import net.shortninja.staffplus.core.application.config.messages.Messages;
@@ -41,12 +42,12 @@ public class CpsHandler {
         currentTests.put(targetPlayer.getUniqueId(), 0);
         messages.send(sender, messages.cpsStart.replace("%target%", targetPlayer.getName()).replace("%seconds%", Integer.toString((int) cpsModeConfiguration.getModeCpsTime() / 20)), messages.prefixGeneral);
 
-        new BukkitRunnable() {
+        new WrappedRunnable() {
             @Override
             public void run() {
                 stopTest(sender, targetPlayer);
             }
-        }.runTaskLater(StaffPlusPlus.get(), cpsModeConfiguration.getModeCpsTime());
+        }.runTaskLater(StaffPlusPlus.getScheduler(), cpsModeConfiguration.getModeCpsTime());
     }
 
     public void stopTest(CommandSender sender, Player targetPlayer) {

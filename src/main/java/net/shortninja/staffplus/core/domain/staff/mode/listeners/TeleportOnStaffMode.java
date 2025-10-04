@@ -34,7 +34,7 @@ public class TeleportOnStaffMode implements Listener {
                 GeneralModeConfiguration modeConfiguration = modeProvider.getMode(player, event.getMode());
                 Optional<Location> previousLocation = event.getModeData().getPreviousLocation();
                 if (modeConfiguration.isModeOriginalLocation() && previousLocation.isPresent()) {
-                    player.teleport(previousLocation.get().setDirection(player.getLocation().getDirection()));
+                    player.teleportAsync(previousLocation.get().setDirection(player.getLocation().getDirection()));
                     messages.send(player, messages.modeOriginalLocation, messages.prefixGeneral);
                 }
                 event.getTeleportToLocation().ifPresent(player::teleport);

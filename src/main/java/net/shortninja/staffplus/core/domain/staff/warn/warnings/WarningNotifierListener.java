@@ -16,8 +16,6 @@ import org.bukkit.event.Listener;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.bukkit.Bukkit.getScheduler;
-
 @IocBukkitListener
 public class WarningNotifierListener implements Listener {
 
@@ -44,7 +42,7 @@ public class WarningNotifierListener implements Listener {
             return;
         }
 
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             List<Warning> warnings = warnService.getWarnings(event.getPlayer().getUniqueId(), false);
             if (warningConfiguration.isAlwaysNotifyUser()) {
                 if (!warnings.isEmpty()) {

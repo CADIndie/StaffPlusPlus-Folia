@@ -13,7 +13,6 @@ import net.shortninja.staffplusplus.warnings.IWarning;
 import net.shortninja.staffplusplus.warnings.WarningAppealApprovedEvent;
 import net.shortninja.staffplusplus.warnings.WarningCreatedEvent;
 import net.shortninja.staffplusplus.warnings.WarningRemovedEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -77,7 +76,7 @@ public class WarningListener implements Listener {
 
     @EventHandler
     public void executeRemovalActions(WarningRemovedEvent warningRemovedEvent) {
-        Bukkit.getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             UUID targetUuid = warningRemovedEvent.getWarning().getTargetUuid();
             Optional<SppPlayer> target = playerManager.getOnOrOfflinePlayer(targetUuid);
             if (target.isPresent()) {
@@ -88,7 +87,7 @@ public class WarningListener implements Listener {
 
     @EventHandler
     public void executeAppealedActions(WarningAppealApprovedEvent warningAppealApprovedEvent) {
-        Bukkit.getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             actionService.rollbackActionable(warningAppealApprovedEvent.getWarning());
         });
     }

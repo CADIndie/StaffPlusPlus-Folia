@@ -27,7 +27,7 @@ public class UpdateNotifier extends BukkitRunnable {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(SpigetClient.class);
-        runTaskAsynchronously(StaffPlusPlus.get());
+        StaffPlusPlus.getScheduler().runTaskAsynchronously( this);
     }
 
     @Override

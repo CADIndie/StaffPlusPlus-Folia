@@ -15,8 +15,6 @@ import org.bukkit.event.Listener;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.bukkit.Bukkit.getScheduler;
-
 @IocBukkitListener
 public class ReportListener implements Listener {
 
@@ -37,7 +35,7 @@ public class ReportListener implements Listener {
         if (!reportConfiguration.isNotifyReporterOnJoin()) {
             return;
         }
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             List<Report> reports = reportService.getMyReports(event.getPlayer().getUniqueId());
             List<Report> openReports = reports.stream().filter(r -> !r.getReportStatus().isClosed()).collect(Collectors.toList());
 

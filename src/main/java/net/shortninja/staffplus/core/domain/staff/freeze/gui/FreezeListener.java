@@ -1,6 +1,7 @@
 package net.shortninja.staffplus.core.domain.staff.freeze.gui;
 
 import be.garagepoort.mcioc.tubingbukkit.annotations.IocBukkitListener;
+import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplus.core.application.config.messages.Messages;
 import net.shortninja.staffplus.core.domain.staff.freeze.FreezeGui;
 import net.shortninja.staffplus.core.domain.staff.freeze.config.FreezeConfiguration;
@@ -32,13 +33,18 @@ public class FreezeListener implements Listener {
         }
 
         if(freezeConfiguration.blindness || freezeConfiguration.prompt) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 128));
+            StaffPlusPlus.getScheduler().runTaskAtEntity(player.getPlayer(), () -> {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 128));
+            });
         }
 
         messages.send(event.getIssuer(), messages.staffFroze.replace("%target%", player.getName()), messages.prefixGeneral);
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, Integer.MAX_VALUE, 128));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 128));
+        StaffPlusPlus.getScheduler().runTaskAtEntity(player.getPlayer(), () -> {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, Integer.MAX_VALUE, 128));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 128));
+        });
+
         if (freezeConfiguration.sound != null) {
             freezeConfiguration.sound.play(player);
         }

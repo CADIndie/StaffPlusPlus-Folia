@@ -21,7 +21,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static net.shortninja.staffplus.core.domain.staff.ban.ipbans.IpBanMessageStringUtil.replaceBanPlaceholders;
-import static org.bukkit.Bukkit.getScheduler;
 
 @IocBukkitListener
 public class IpBanKickPlayerListener implements Listener {
@@ -42,11 +41,11 @@ public class IpBanKickPlayerListener implements Listener {
 
     @EventHandler
     public void kickBannedPlayer(IpBanEvent ipBanEvent) {
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             IIpBan ban = ipBanEvent.getBan();
             List<PlayerIpRecord> playersToKick = ban.isSubnet() ? playerIpService.getMatchedBySubnet(ban.getIp()) : playerIpService.getMatchedByIp(ban.getIp());
 
-            getScheduler().runTaskLater(StaffPlusPlus.get(), () -> {
+            StaffPlusPlus.getScheduler().runTaskLater(() -> {
                 List<SppPlayer> sppPlayers = playersToKick.stream().map(p -> playerManager.getOnlinePlayer(p.getPlayerUuid()))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
@@ -61,11 +60,11 @@ public class IpBanKickPlayerListener implements Listener {
 
     @EventHandler
     public void kickBannedPlayer(IpBanBungeeEvent ipBanEvent) {
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             IpBanBungeeDto ban = ipBanEvent.getBan();
             List<PlayerIpRecord> playersToKick = ban.isSubnet() ? playerIpService.getMatchedBySubnet(ban.getIp()) : playerIpService.getMatchedByIp(ban.getIp());
 
-            getScheduler().runTaskLater(StaffPlusPlus.get(), () -> {
+            StaffPlusPlus.getScheduler().runTaskLater(() -> {
                 List<SppPlayer> sppPlayers = playersToKick.stream().map(p -> playerManager.getOnlinePlayer(p.getPlayerUuid()))
                     .filter(Optional::isPresent)
                     .map(Optional::get)

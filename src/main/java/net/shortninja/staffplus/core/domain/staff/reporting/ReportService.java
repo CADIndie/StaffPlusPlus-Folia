@@ -168,7 +168,7 @@ public class ReportService implements InfractionProvider, net.shortninja.staffpl
         Report report = getReport(reportId);
         Location location = report.getLocation().orElseThrow(() -> new BusinessException("Cannot teleport to report, report has no known location"));
         if (report.getServerName().equalsIgnoreCase(options.serverName)) {
-            player.teleport(location);
+            player.teleportAsync(location);
             messages.send(player, "You have been teleported to the location where this report was created", messages.prefixReports);
         } else {
             actionService.createCommand(

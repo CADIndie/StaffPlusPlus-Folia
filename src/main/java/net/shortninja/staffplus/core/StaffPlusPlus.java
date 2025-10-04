@@ -1,6 +1,8 @@
 package net.shortninja.staffplus.core;
 
 import be.garagepoort.mcioc.tubingbukkit.TubingBukkitPlugin;
+import me.nahu.scheduler.wrapper.WrappedScheduler;
+import me.nahu.scheduler.wrapper.WrappedSchedulerBuilder;
 import net.shortninja.staffplus.core.application.bootstrap.PluginDisable;
 import net.shortninja.staffplusplus.IStaffPlus;
 import net.shortninja.staffplusplus.ban.BanService;
@@ -22,6 +24,7 @@ import java.util.stream.Stream;
 public class StaffPlusPlus extends TubingBukkitPlugin implements IStaffPlus {
 
     private static StaffPlusPlus plugin;
+    private WrappedScheduler scheduler;
 
     public static StaffPlusPlus get() {
         return plugin;
@@ -31,6 +34,10 @@ public class StaffPlusPlus extends TubingBukkitPlugin implements IStaffPlus {
     protected void beforeEnable() {
         try {
             plugin = this;
+
+            WrappedSchedulerBuilder schedulerBuilder = WrappedSchedulerBuilder.builder().plugin(plugin);
+            scheduler = schedulerBuilder.build();
+
             File firstInstallFile = new File(StaffPlusPlus.get().getDataFolder(), "installed.txt");
             if (!firstInstallFile.exists()) {
                 getLogger().info("First installation detected");
@@ -112,5 +119,9 @@ public class StaffPlusPlus extends TubingBukkitPlugin implements IStaffPlus {
     @Override
     public WarningService getWarningService() {
         return StaffPlusPlus.get().getIocContainer().get(WarningService.class);
+    }
+
+    public static WrappedScheduler getScheduler() {
+        return StaffPlusPlus.get().scheduler;
     }
 }

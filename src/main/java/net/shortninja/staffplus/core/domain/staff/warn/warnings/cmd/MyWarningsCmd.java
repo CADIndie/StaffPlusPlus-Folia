@@ -13,7 +13,6 @@ import net.shortninja.staffplus.core.common.exceptions.BusinessException;
 import net.shortninja.staffplus.core.common.permissions.PermissionHandler;
 import net.shortninja.staffplus.core.domain.staff.warn.warnings.WarnService;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -45,7 +44,7 @@ public class MyWarningsCmd extends AbstractCmd {
         }
 
         guiActionService.executeAction((Player) sender, "manage-warnings/view/my-warnings");
-        Bukkit.getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), ()-> warnService.markWarningsRead(((Player) sender).getUniqueId()));
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(()-> warnService.markWarningsRead(((Player) sender).getUniqueId()));
         return true;
     }
 

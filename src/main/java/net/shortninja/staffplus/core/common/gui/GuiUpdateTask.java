@@ -15,7 +15,7 @@ public class GuiUpdateTask extends BukkitRunnable {
 
     public GuiUpdateTask(OnlineSessionsManager sessionManager) {
         this.sessionManager = sessionManager;
-        runTaskTimer(StaffPlusPlus.get(), 0, 10);
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(this, 0, 10);
     }
 
     @Override

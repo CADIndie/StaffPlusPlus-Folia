@@ -2,6 +2,7 @@ package net.shortninja.staffplus.core.domain.player.listeners;
 
 import be.garagepoort.mcioc.configuration.ConfigProperty;
 import be.garagepoort.mcioc.tubingbukkit.annotations.IocBukkitListener;
+import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplus.core.application.config.messages.Messages;
 import net.shortninja.staffplus.core.application.session.OnlinePlayerSession;
 import net.shortninja.staffplus.core.application.session.OnlineSessionsManager;
@@ -66,7 +67,10 @@ public class PlayerQuit implements Listener {
         if (session.isFrozen()) {
             for (String command : freezeConfiguration.logoutCommands) {
                 command = command.replace("%player%", player.getName());
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+                String finalCommand = command;
+                Bukkit.getGlobalRegionScheduler().execute(StaffPlusPlus.get(), () ->
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), finalCommand)
+                );
             }
             freezeHandler.removeFreeze(Bukkit.getConsoleSender(), player);
         }

@@ -52,7 +52,7 @@ public class MinerGuiController {
     public void changeGlass(Player player, @GuiParam("to") String toPlayerUuid) {
         Optional<SppPlayer> p = playerManager.getOnlinePlayer(UUID.fromString(toPlayerUuid));
         if (p.isPresent()) {
-            player.teleport(p.get().getPlayer());
+            player.teleportAsync(p.get().getPlayer().getLocation());
         } else {
             messages.send(player, messages.playerOffline, messages.prefixGeneral);
         }

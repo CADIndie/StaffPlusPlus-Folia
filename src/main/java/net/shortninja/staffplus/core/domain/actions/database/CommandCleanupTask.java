@@ -13,7 +13,7 @@ public class CommandCleanupTask extends BukkitRunnable {
 
     public CommandCleanupTask(StoredCommandRepository storedCommandRepository, @InjectTubingPlugin StaffPlusPlus staffPlusPlus) {
         this.storedCommandRepository = storedCommandRepository;
-        runTaskTimerAsynchronously(staffPlusPlus, TIMER * 20, TIMER * 20);
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(this, TIMER * 20, TIMER * 20);
     }
 
     @Override

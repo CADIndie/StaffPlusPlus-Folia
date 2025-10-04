@@ -32,7 +32,7 @@ public class MuteSessionTask extends BukkitRunnable {
         this.muteService = muteService;
         this.muteConfiguration = muteConfiguration;
         this.playerManager = playerManager;
-        runTaskTimerAsynchronously(StaffPlusPlus.get(), DELAY, DELAY);
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(this, DELAY, DELAY);
     }
 
     @Override

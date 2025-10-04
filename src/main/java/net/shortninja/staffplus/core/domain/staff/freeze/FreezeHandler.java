@@ -13,7 +13,6 @@ import net.shortninja.staffplus.core.domain.staff.freeze.config.FreezeConfigurat
 import net.shortninja.staffplusplus.freeze.PlayerFrozenEvent;
 import net.shortninja.staffplusplus.freeze.PlayerUnFrozenEvent;
 import net.shortninja.staffplusplus.session.SppPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -39,7 +38,7 @@ public class FreezeHandler {
         this.messages = messages;
 
         if (freezeConfiguration.titleMessageEnabled) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(StaffPlusPlus.get(), () -> {
+            StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(() -> {
                 sessionManager.getAll().stream().filter(OnlinePlayerSession::isFrozen)
                     .map(s -> playerManager.getOnlinePlayer(s.getUuid()))
                     .flatMap(optional -> optional.map(Stream::of).orElseGet(Stream::empty))

@@ -28,8 +28,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.bukkit.Bukkit.getScheduler;
-
 public abstract class AbstractCmd extends BukkitCommand implements SppCommand {
 
     private static final String SPACE_REPLACER = "%space%";
@@ -109,7 +107,7 @@ public abstract class AbstractCmd extends BukkitCommand implements SppCommand {
                 result = executeCmd(sender, alias, filteredArgs, player.orElse(null), mapOptionalParameters(optionalParamaters));
             } else {
                 String[] finalFilteredArgs = filteredArgs;
-                getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+                StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
                     try {
                         executeCmd(sender, alias, finalFilteredArgs, player.orElse(null), mapOptionalParameters(optionalParamaters));
                     } catch (BusinessException e) {

@@ -1,6 +1,7 @@
 package net.shortninja.staffplus.core.domain.staff.mode.listeners;
 
 import be.garagepoort.mcioc.tubingbukkit.annotations.IocBukkitListener;
+import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplus.core.application.config.messages.Messages;
 import net.shortninja.staffplus.core.domain.player.PlayerManager;
 import net.shortninja.staffplus.core.domain.player.potioneffects.PotionEffectService;
@@ -64,7 +65,9 @@ public class PlayerStateOnStaffMode implements Listener {
                 player.setGameMode(modeData.getGameMode());
                 player.setFireTicks(modeData.getFireTicks());
                 potionEffectService.removeAllPotionEffects(player);
-                modeData.getPotionEffects().forEach(player::addPotionEffect);
+                modeData.getPotionEffects().forEach(potionEffect -> {
+                    StaffPlusPlus.getScheduler().runTaskAtEntity(player, () -> player.addPotionEffect(potionEffect));
+                });
 
                 messages.send(player, messages.modeStatus.replace("%status%", messages.disabled), messages.prefixGeneral);
             });

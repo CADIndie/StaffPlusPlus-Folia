@@ -18,7 +18,7 @@ public class Tasks extends BukkitRunnable {
     @ConfigProperty("permissions:member")
     private String permissionMember;
     @ConfigProperty("clock")
-    private long clock;
+    private long clock = 1L;
 
     private final PermissionHandler permission;
     private final Messages messages;
@@ -40,7 +40,7 @@ public class Tasks extends BukkitRunnable {
         this.freezeConfiguration = freezeConfiguration;
         freezeInterval = 0;
         now = System.currentTimeMillis();
-        runTaskTimerAsynchronously(StaffPlusPlus.get(), clock * 20, clock * 20);
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(this, clock * 20, clock * 20);
     }
 
     @Override

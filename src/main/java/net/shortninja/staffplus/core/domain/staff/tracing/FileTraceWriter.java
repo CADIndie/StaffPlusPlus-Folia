@@ -18,8 +18,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
-import static org.bukkit.Bukkit.getScheduler;
-
 public class FileTraceWriter implements TraceWriter {
 
     private static final String PATH = StaffPlusPlus.get().getDataFolder() + "/trace/";
@@ -49,7 +47,7 @@ public class FileTraceWriter implements TraceWriter {
 
     @Override
     public void writeToTrace(String message) {
-        getScheduler().runTaskAsynchronously(StaffPlusPlus.get(), () -> {
+        StaffPlusPlus.getScheduler().runTaskAsynchronously(() -> {
             try {
                 String traceMessage = "[" + LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS).format(DateTimeFormatter.ISO_DATE_TIME) + "] : " + message;
                 writer.write(traceMessage);

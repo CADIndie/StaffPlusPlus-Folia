@@ -8,7 +8,6 @@ import net.shortninja.staffplus.core.application.config.messages.Messages;
 import net.shortninja.staffplus.core.application.session.OnlineSessionsManager;
 import net.shortninja.staffplus.core.domain.player.PlayerManager;
 import net.shortninja.staffplusplus.session.IPlayerSession;
-import org.bukkit.Bukkit;
 
 import java.util.Optional;
 
@@ -18,7 +17,7 @@ public class VanishActionBarTask {
     public VanishActionBarTask(OnlineSessionsManager onlineSessionsManager,
                                PlayerManager playerManager,
                                Messages messages) {
-        Bukkit.getScheduler().runTaskTimer(StaffPlusPlus.get(), () ->
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(() ->
             onlineSessionsManager.getAll().stream()
                 .filter(IPlayerSession::isVanished)
                 .map(s -> playerManager.getOnlinePlayer(s.getUuid()))

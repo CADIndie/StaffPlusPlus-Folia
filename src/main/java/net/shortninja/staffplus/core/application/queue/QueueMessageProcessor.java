@@ -32,7 +32,7 @@ public abstract class QueueMessageProcessor extends BukkitRunnable {
         listeners.stream()
             .filter(t -> t.getType().startsWith(getProcessingGroup()))
             .forEach(listener -> this.listeners.put(listener.getType(), listener));
-        runTaskTimerAsynchronously(StaffPlusPlus.get(), TIMER * 20, TIMER * 20);
+        StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(this, TIMER * 20, TIMER * 20);
     }
 
     protected abstract String getProcessingGroup();

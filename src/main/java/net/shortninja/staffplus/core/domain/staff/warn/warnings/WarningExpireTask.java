@@ -14,7 +14,7 @@ public class WarningExpireTask extends BukkitRunnable {
     public WarningExpireTask(WarnService warnService, WarningConfiguration warningConfiguration) {
         this.warnService = warnService;
         if (warningConfiguration.getSeverityLevels().stream().anyMatch(s -> s.getExpirationDuration() > 0)) {
-            runTaskTimerAsynchronously(StaffPlusPlus.get(), DELAY, DELAY);
+            StaffPlusPlus.getScheduler().runTaskTimerAsynchronously(this, DELAY, DELAY);
         }
     }
 

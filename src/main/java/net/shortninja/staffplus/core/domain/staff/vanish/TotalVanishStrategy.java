@@ -2,6 +2,7 @@ package net.shortninja.staffplus.core.domain.staff.vanish;
 
 import be.garagepoort.mcioc.IocBean;
 import be.garagepoort.mcioc.IocMultiProvider;
+import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplus.core.application.session.OnlineSessionsManager;
 import net.shortninja.staffplus.core.common.IProtocolService;
 import net.shortninja.staffplus.core.common.permissions.PermissionHandler;
@@ -44,12 +45,14 @@ public class TotalVanishStrategy implements VanishStrategy {
         
         // Cancel existing targets of mobs
         int mobActivationRange = Bukkit.getServer().spigot().getConfig().getInt("world-settings.default.entity-activation-range.monsters");
-        player.getPlayer().getWorld().getNearbyEntities(player.getPlayer().getLocation(), mobActivationRange, mobActivationRange, mobActivationRange).forEach(entity -> {
-            if (!(entity instanceof Mob)) return;
-            Mob mob = (Mob) entity;
-            if (mob.getTarget() != player.getPlayer()) return;
-            mob.setTarget(null);
-       });
+        StaffPlusPlus.getScheduler().runTaskAtEntity(player.getPlayer(), () -> {
+            player.getPlayer().getWorld().getNearbyEntities(player.getPlayer().getLocation(), mobActivationRange, mobActivationRange, mobActivationRange).forEach(entity -> {
+                if (!(entity instanceof Mob)) return;
+                Mob mob = (Mob) entity;
+                if (mob.getTarget() != player.getPlayer()) return;
+                mob.setTarget(null);
+            });
+        });
     }
 
     @Override

@@ -4,6 +4,7 @@ import be.garagepoort.mcioc.IocBean;
 import be.garagepoort.mcioc.configuration.ConfigProperty;
 import be.garagepoort.mcioc.tubinggui.GuiActionBuilder;
 import be.garagepoort.mcioc.tubinggui.GuiActionService;
+import net.shortninja.staffplus.core.StaffPlusPlus;
 import net.shortninja.staffplus.core.application.config.Options;
 import net.shortninja.staffplus.core.application.config.messages.Messages;
 import net.shortninja.staffplus.core.application.session.OnlinePlayerSession;
@@ -149,7 +150,7 @@ public class GadgetHandler {
         }
 
         messages.send(player, messages.modeRandomTeleport.replace("%target%", currentPlayer.getName()), messages.prefixGeneral);
-        player.teleport(currentPlayer);
+        player.teleportAsync(currentPlayer.getLocation());
     }
 
     public void onVanish(Player player) {
@@ -217,7 +218,10 @@ public class GadgetHandler {
 
             switch (customModuleConfiguration.getType()) {
                 case COMMAND_STATIC:
-                    Bukkit.dispatchCommand(player, command);
+                    String finalCommand1 = command;
+                    Bukkit.getGlobalRegionScheduler().execute(StaffPlusPlus.get(), () ->
+                        Bukkit.dispatchCommand(player, finalCommand1)
+                    );
                     break;
                 case COMMAND_DYNAMIC:
                     if (targetPlayer != null) {
@@ -225,7 +229,10 @@ public class GadgetHandler {
                     }
                     break;
                 case COMMAND_CONSOLE:
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                    String finalCommand = command;
+                    Bukkit.getGlobalRegionScheduler().execute(StaffPlusPlus.get(), () ->
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand)
+                    );
                     break;
                 default:
                     break;
